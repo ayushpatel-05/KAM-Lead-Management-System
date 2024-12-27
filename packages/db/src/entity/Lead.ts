@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, DeleteDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, DeleteDateColumn, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { User } from './User'; // Assuming User entity is defined
 import { Restaurant } from './Restaurant'; // Assuming Restaurant entity is defined
+import { Contact } from './Contact';
 
 @Entity()
 export class Lead {
@@ -34,6 +35,9 @@ export class Lead {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @OneToMany(() => Contact, (contact) => contact.lead)
+  contacts!: Contact[];
 
   @ManyToOne(() => User, (user) => user.assignedLeads, { nullable: false, onDelete: 'SET NULL' }) // Assuming User has a one-to-many relationship with Lead
   keyAccountManager!: User; 

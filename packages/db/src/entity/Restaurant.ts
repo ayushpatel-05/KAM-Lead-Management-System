@@ -32,3 +32,4 @@ export class Restaurant {
   @UpdateDateColumn()
   updatedAt!: Date;
 }
+//Will restaurant require a contact as well?
