@@ -6,10 +6,11 @@ import 'dotenv/config';
 
 const port = process.env.PORT || 3001;
 const server = createServer();
-let appDataSource:DataSource|null = null;
-ensureDatabaseExists().then(async () => {
+let dataSource:DataSource|null = null;
+ensureDatabaseExists().then(() => {
   console.log("The password is: ",process.env.DB_USERNAME);
-  appDataSource = await getAppDataSource();
+  dataSource = getAppDataSource();
+  dataSource?.initialize();
 });
 
 

@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
-
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from "typeorm";
+import { Restaurant } from "./Restaurant";
 @Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
@@ -23,6 +23,9 @@ export class User {
     default: 'kam',
   })
   role!: 'admin' | 'kam' | 'sales';
+
+  @OneToMany(() => Restaurant, (restaurant) => restaurant.user)
+  restaurants!: Restaurant[];
 
   // @Column({ type: 'boolean', default: false })
   // is_deleted!: boolean;
