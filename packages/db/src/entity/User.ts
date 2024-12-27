@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from "typeorm";
 import { Restaurant } from "./Restaurant";
+import { Lead } from "./Lead";
 @Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
@@ -26,6 +27,12 @@ export class User {
 
   @OneToMany(() => Restaurant, (restaurant) => restaurant.user)
   restaurants!: Restaurant[];
+
+  @OneToMany(() => Lead, (lead) => lead.keyAccountManager)
+  assignedLeads!: Lead[];
+
+  @OneToMany(() => Lead, (lead) => lead.createdBy)
+  createdLeads!: Lead[];
 
   // @Column({ type: 'boolean', default: false })
   // is_deleted!: boolean;
