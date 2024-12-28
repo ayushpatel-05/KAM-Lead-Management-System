@@ -9,19 +9,22 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "typeorm-ts-node-esm",
     "build": "tsc",
-    "migration:generate": "npm run typeorm migration:generate -n",
-    "migration:run": "npm run typeorm migration:run",
-    "migration:revert": "npm run typeorm migration:revert"
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migration/%npm_config_migrationName% --dataSource ./src/data-source.ts",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts",
+    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d ./src/data-source.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.7",
+    "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20",
-    "pg": "^8.13.1"
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
+    "@types/node": "^22.10.2",
     "@types/pg": "^8.11.10",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   }
 }

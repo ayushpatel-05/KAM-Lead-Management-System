@@ -1,49 +1,50 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import pg from "pg";
+import "dotenv/config"
 
-// export const AppDataSource = new DataSource({
-//   type: "postgres",
-//   host: process.env.DB_HOST || "localhost",
-//   port: parseInt(process.env.DB_PORT || "5432"),
-//   username: process.env.DB_USERNAME || "postgres",
-//   password: process.env.DB_PASSWORD || "password",
-//   database: process.env.DB_NAME || "test",
-//   synchronize: false, // use migrations instead
-//   logging: true,
-//   entities: ["entity/**/*.[ts,js]"],
-//   migrations: ["migration/**/*.[ts,js]"],
-//   subscribers: ["subscriber/**/*.[ts,js]"],
-// });
-let appDataSourceInstance:DataSource|null = null;
+export const AppDataSource = new DataSource({
+  type: "postgres",
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT || "5432"),
+  username: process.env.DB_USERNAME || "postgres",
+  password: process.env.DB_PASSWORD || "password",
+  database: process.env.DB_NAME || "test",
+  synchronize: false, // use migrations instead
+  logging: true,
+  entities: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/entity/*.ts`], // Path to entities.
+  migrations: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/migration/*.ts`], // Path to migrations.
+  subscribers: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/subscriber/*.ts`], // Path to subscribers.
+});
+// let appDataSourceInstance:DataSource|null = null;
 
-export const getAppDataSource = async () => {
-    if (!appDataSourceInstance) {
-      appDataSourceInstance = new DataSource({
-        type: "postgres",
-        host: process.env.DB_HOST || "localhost",
-        port: parseInt(process.env.DB_PORT || "5432"),
-        username: process.env.DB_USERNAME || "postgres",
-        password: process.env.DB_PASSWORD || "password",
-        database: process.env.DB_NAME || "test",
-        synchronize: false, // use migrations instead
-        logging: true,
-        entities: ["entity/**/*.[ts,js]"],
-        migrations: ["migration/**/*.[ts,js]"],
-        subscribers: ["subscriber/**/*.[ts,js]"],
-      });
+// export const getAppDataSource = () => {
+//     if (!appDataSourceInstance) {
+//       appDataSourceInstance = new DataSource({
+//         type: "postgres",
+//         host: process.env.DB_HOST || "localhost",
+//         port: parseInt(process.env.DB_PORT || "5432"),
+//         username: process.env.DB_USERNAME || "postgres",
+//         password: process.env.DB_PASSWORD || "password",
+//         database: process.env.DB_NAME || "test",
+//         synchronize: false, // use migrations instead
+//         logging: true,
+//         entities: ["entity/**/*.[ts,js]"],
+//         migrations: ["migration/**/*.[ts,js]"],
+//         subscribers: ["subscriber/**/*.[ts,js]"],
+//       });
   
-      try {
-        await appDataSourceInstance.initialize();
-        console.log("Data Source has been initialized!");
-      } catch (error) {
-        console.error("Error during Data Source initialization:", error);
-        throw error;
-      }
-    }
+//     //   try {
+//     //     await appDataSourceInstance.initialize();
+//     //     console.log("Data Source has been initialized!");
+//     //   } catch (error) {
+//     //     console.error("Error during Data Source initialization:", error);
+//     //     throw error;
+//     //   }
+//     }
   
-    return appDataSourceInstance;
-  };
+//     return appDataSourceInstance;
+//   };
   
 
 // Create database if it doesn't exist.
