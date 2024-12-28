@@ -3,6 +3,7 @@ import { User } from './User'; // Assuming User entity is defined
 import { Restaurant } from './Restaurant'; // Assuming Restaurant entity is defined
 import { Contact } from './Contact';
 import { Interaction } from './Interaction';
+import { CallSchedule } from './CallSchedule';
 
 @Entity()
 export class Lead {
@@ -37,7 +38,7 @@ export class Lead {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToMany(() => Contact, (contact) => contact.lead)
+  @OneToMany(() => Contact, (contact) => contact.lead, {cascade: ["insert", "update", "remove", "soft-remove", "recover"]})
   contacts!: Contact[];
 
   @ManyToOne(() => User, (user) => user.assignedLeads, { nullable: false, onDelete: 'SET NULL' }) // Assuming User has a one-to-many relationship with Lead
@@ -49,6 +50,10 @@ export class Lead {
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.leads, { nullable: true, onDelete: 'CASCADE' }) // Assuming Restaurant has a one-to-many relationship with Lead
   restaurant!: Restaurant;
 
+  @OneToMany(() => CallSchedule,(callschedule) => callschedule.lead, {cascade: ["insert", "update", "remove", "soft-remove", "recover"]})
+  callSchedules!: CallSchedule[];
+
   @OneToMany(() => Interaction, (interaction) => interaction.lead, {nullable: false, cascade: ["insert", "update", "remove", "soft-remove", "recover"]})
   interactions!: Interaction[];
+
 }
