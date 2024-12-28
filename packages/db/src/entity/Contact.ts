@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 import { Lead } from './Lead';
+import { Interaction } from './Interaction';
 
 @Entity('contacts')
 export class Contact {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   contact_id!: number;
   
   @Column({ type: 'varchar', length: 255, nullable: false })
@@ -24,6 +25,9 @@ export class Contact {
   
   @ManyToOne(() => Lead, (lead) => lead.contacts, { nullable: true, onDelete: 'CASCADE' }) 
   lead!: Lead;
+
+  @OneToMany(() => Interaction, (interaction) => interaction.contact)
+  interactions!: Interaction[];
 
 //   @ManyToOne(() => Restaurant, (restaurant) => restaurant.contacts, { nullable: true }) 
 //   restaurant_id!: Restaurant;
