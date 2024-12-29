@@ -37,7 +37,7 @@ export default function Web() {
 
   return (
     <div>
-      <h1>Web</h1>
+      <h1 className="text-5xl">Web</h1>
       <form onSubmit={onSubmit}>
         <label htmlFor="name">Name </label>
         <input
