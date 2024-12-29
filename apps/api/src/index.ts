@@ -1,6 +1,6 @@
 import { createServer } from "./server";
 import { log } from "@repo/logger";
-import { getAppDataSource, ensureDatabaseExists } from "@repo/db";
+import { AppDataSource, ensureDatabaseExists } from "@repo/db";
 import { DataSource } from "typeorm";
 import 'dotenv/config';
 
@@ -9,7 +9,7 @@ const server = createServer();
 let dataSource:DataSource|null = null;
 ensureDatabaseExists().then(() => {
   console.log("The password is: ",process.env.DB_USERNAME);
-  dataSource = getAppDataSource();
+  dataSource = AppDataSource;
   dataSource?.initialize();
 });
 
