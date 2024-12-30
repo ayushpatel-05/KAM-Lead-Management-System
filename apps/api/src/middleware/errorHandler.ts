@@ -1,6 +1,7 @@
 // import { logger } from '../support/logger.js' 
-import { APIError } from '../utils/api-errors.js'
+import { APIError } from "../utils/api-errors";
 import { Request, Response, NextFunction } from "express";
+import { ZodError } from "zod";
 /**
  * Error handling middleware for Express
  *
@@ -11,7 +12,7 @@ import { Request, Response, NextFunction } from "express";
  */
 const errorHandler = (error:any, req:Request, res:Response, _next:NextFunction) => {
     // logger.error(error)
-  
+    console.log("Error handler: ", error);
     // catch api error
     if (error instanceof APIError) {
       return res.status(error.status).json({
@@ -20,6 +21,21 @@ const errorHandler = (error:any, req:Request, res:Response, _next:NextFunction) 
           message: error.message
         }
       })
+    }
+
+    // Handle Zod validation errors
+    if (error instanceof ZodError) {
+      const firstIssue = error.issues[0]; // Get the first issue
+      return res.status(422).json({
+        error: {
+          code: 422,
+          message: "Validation error",
+          details: {
+            path: firstIssue.path.join("."),
+            message: firstIssue.message,
+          },
+        },
+      });
     }
   
     //Other error handling conditions, like typeorm error instance etc

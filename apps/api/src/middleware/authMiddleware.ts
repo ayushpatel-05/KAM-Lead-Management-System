@@ -3,6 +3,7 @@ import { AccessDeniedError } from "../utils/api-errors";
 import { asyncErrorHandler } from "./asyncErrorHandler";
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken';
+// import { loginSchema } from "@repo/schemas"
 
 interface ExtendedRequest extends Request {
     user?: User; // Optional user property
@@ -15,8 +16,7 @@ exports.isAuthenticatedUser = asyncErrorHandler(async (req: ExtendedRequest, res
     }
 
 
-    const secretKey:string = process.env.JWT_SECRET_KEY || "secret";
-    const decodedData= jwt.verify(token, secretKey) as JwtPayload;
+    const decodedData= jwt.verify(token, process.env.JWT_SECRET_KEY!) as JwtPayload;
     const user = await AppDataSource.getRepository(User).findOneBy({ id: decodedData.id });
     if (!user) {
         return next(new AccessDeniedError("Invalid User"))
