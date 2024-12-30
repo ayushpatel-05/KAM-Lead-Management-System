@@ -10,7 +10,8 @@
     "lint": "turbo run lint",
     "test": "turbo run test"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "prettier": "^3.2.5",
     "turbo": "^2.3.3"
