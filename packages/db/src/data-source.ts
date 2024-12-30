@@ -12,9 +12,12 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || "test",
   synchronize: false, // use migrations instead
   logging: true,
-  entities: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/entity/*.ts`], // Path to entities.
-  migrations: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/migration/*.ts`], // Path to migrations.
-  subscribers: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/subscriber/*.ts`], // Path to subscribers.
+  // entities: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/entity/*.{ts,js}`], // Path to entities.
+  // migrations: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/migration/*.{ts,js}`], // Path to migrations.
+  // subscribers: [`${process.env.NODE_ENV == 'production' ? "dist" : "src"}/subscriber/*.{ts, js}`], // Path to subscribers.
+  entities: [`${__dirname}/entity/*.{ts,js}`], // Path to entities.
+  migrations: [`${__dirname}/migration/*.{ts,js}`], // Path to migrations.
+  subscribers: [`${__dirname}/subscriber/*.{ts, js}`], // Path to subscribers.
 });
 // let appDataSourceInstance:DataSource|null = null;
 
@@ -56,7 +59,7 @@ export const ensureDatabaseExists = async function ensureDatabaseExists() {
       user: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
     });
-    console.log("The password from data source is: ", process.env.DB_PASSWORD, process.env.DB_HOST, process.env.DB_PORT, process.env.DB_USERNAME, client.password, client.host, client.port, client.user);
+    
     try {
       await client.connect();
       
