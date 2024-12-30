@@ -18,7 +18,7 @@ export class User {
   @Column({ type: 'varchar', length: 255, unique: true, nullable: false })
   email!: string;
 
-  @Column({type: 'varchar', length: 255, nullable: false})
+  @Column({type: 'varchar', length: 255, nullable: false, select: false})
   password!: string;
 
   @Column({
@@ -40,12 +40,12 @@ export class User {
   // @Column({ type: 'boolean', default: false })
   // is_deleted!: boolean;
   //Using typeorm in-build feature for soft deletion
-  @DeleteDateColumn()
+  @DeleteDateColumn({select: false})
   deletedDate!: Date
 
-  @CreateDateColumn()
+  @CreateDateColumn({select: false})
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({select: false})
   updatedAt!: Date;
 }
