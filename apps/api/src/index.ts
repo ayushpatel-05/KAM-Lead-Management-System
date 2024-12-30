@@ -9,8 +9,8 @@ const server = createServer();
 let dataSource:DataSource|null = null;
 ensureDatabaseExists().then(() => {
   console.log("The password is: ",process.env.DB_USERNAME);
-  dataSource = AppDataSource;
-  dataSource?.initialize();
+  // dataSource = AppDataSource;
+  AppDataSource?.initialize();
 });
 
 
