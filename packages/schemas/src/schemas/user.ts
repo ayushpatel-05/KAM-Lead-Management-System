@@ -1,6 +1,22 @@
 import { z } from "zod";
 
 /**
+ * Cleaned user Schema
+ */
+export const UserSchema = z.object({
+  id: z.string().uuid(),
+  firstName: z.string(),
+  lastName: z.string(),
+  phone: z.string().nullable(), // Assuming the phone number is always 10 digits
+  email: z.string().email(),
+  role: z.string(),
+});
+
+const DataSchema = z.object({
+  user: UserSchema,
+});
+
+/**
  * Login Schema
  */
 export const loginSchema = z.object({
@@ -37,8 +53,30 @@ export const registerSchema = z.object({
 export const backendRegisterSchema = registerSchema.innerType().omit({confirmPassword: true});
 
 /**
+ * Login Response Schema
+ */
+export const loginResponseSchema = z.object({
+  message: z.string(),
+  data: DataSchema,
+});
+
+
+/**
+ * Signup Response Schema(Same as login schema for now)
+ */
+export const registerResponseSchema = z.object({
+  message: z.string(),
+  data: DataSchema,
+});
+
+
+
+/**
  * Types for inferred schema outputs
  */
-export type Login = z.infer<typeof loginSchema>;
-export type Register = z.infer<typeof registerSchema>;
-export type BackendRegister = z.infer<typeof backendRegisterSchema>;
+export type LoginPayload = z.infer<typeof loginSchema>;
+export type RegisterPayload = z.infer<typeof registerSchema>;
+export type BackendRegisterPayload = z.infer<typeof backendRegisterSchema>;
+export type LoginResponse = z.infer<typeof loginResponseSchema>;
+export type RegisterResponse = z.infer<typeof registerResponseSchema>;
+export type User = z.infer<typeof UserSchema>;
