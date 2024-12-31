@@ -66,9 +66,6 @@ export class Interaction {
   //The POC with which interaction happen
   @ManyToOne(() => Contact, (contact) => contact.interactions, {nullable: false, onDelete: 'CASCADE'})
   contact!: Contact;
-  // // Optional association with Restaurant
-  // @ManyToOne(() => Restaurant, (restaurant) => restaurant.interactions, { nullable: true })
-  // restaurant!: Restaurant | null;
 
   // Interaction outcome (e.g., positive, neutral, negative)
   @Column({ 
