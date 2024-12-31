@@ -74,9 +74,10 @@ export class Interaction {
   @Column({ 
     type: 'enum', 
     enum: ['positive', 'neutral', 'negative'], 
-    nullable: true 
+    default: 'neutral',
+    nullable: false 
   })
-  outcome!: 'positive' | 'neutral' | 'negative' | null;
+  outcome!: 'positive' | 'neutral' | 'negative';
 
   @CreateDateColumn()
   created_at!: Date;
