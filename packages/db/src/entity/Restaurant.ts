@@ -16,20 +16,20 @@ export class Restaurant {
   address!: Address | null;
   
   //Added by(TODO: Change the name of field later)
-  @ManyToOne(() => User, (user) => user.restaurants, {onDelete: 'SET NULL'})
+  @ManyToOne(() => User, (user) => user.restaurants, {onDelete: 'SET NULL', nullable: false})
   user!: User;
 
   //Lead cooresponding to the restaurant. A single user can have multiple leads(Assumption)
   @OneToMany(() => Lead, (lead) => lead.restaurant)
   leads!: Lead[];
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({select: false})
   deletedDate!: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({select: false})
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({select: false})
   updatedAt!: Date;
 }
 //Will restaurant require a contact as well?

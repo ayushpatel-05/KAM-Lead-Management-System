@@ -1,0 +1,1 @@
+-Use softRemove and recove along with setting cascade: ["soft-delete",...] for cascade soft deleting(softDelete does not do cascade due to some bug in typeORM)
