@@ -5,11 +5,11 @@ import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 // import { loginSchema } from "@repo/schemas"
 
-interface ExtendedRequest extends Request {
+export interface ExtendedRequest extends Request {
     user?: User; // Optional user property
   }
 
-exports.isAuthenticatedUser = asyncErrorHandler(async (req: ExtendedRequest, res: Response, next: NextFunction) => {
+const isAuthenticatedUser = asyncErrorHandler(async (req: ExtendedRequest, res: Response, next: NextFunction) => {
     const { token } = req.cookies;
     if (!token) {
         return next(new AccessDeniedError("No token recieved"));
@@ -24,3 +24,5 @@ exports.isAuthenticatedUser = asyncErrorHandler(async (req: ExtendedRequest, res
     req.user = user;
     next();
 });
+
+export default isAuthenticatedUser;

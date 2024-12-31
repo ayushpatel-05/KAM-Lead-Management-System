@@ -2,9 +2,12 @@ import { AppDataSource } from "@repo/db";
 import { User } from "@repo/db";
 
 export class UserRepository {
-  async findByEmail(email: string) {
+  async findByEmailLogin(email: string) {
     try{
-      return AppDataSource.getRepository(User).findOneBy({ email: email });
+      return AppDataSource.getRepository(User).createQueryBuilder('user')
+      .addSelect('user.password') // Include the password field
+      .where('user.email = :email', { email })
+      .getOne();
     }
     catch(error) {
       console.log("Error: ", error);
