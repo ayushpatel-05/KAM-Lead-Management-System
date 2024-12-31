@@ -2,6 +2,7 @@
 import { APIError } from "../utils/api-errors";
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+import { TokenExpiredError } from "jsonwebtoken";
 /**
  * Error handling middleware for Express
  *
@@ -36,6 +37,13 @@ const errorHandler = (error:any, req:Request, res:Response, _next:NextFunction) 
           },
         },
       });
+    }
+
+    if (error instanceof TokenExpiredError) {
+      return res.status(401).json({ 
+          code: 401,
+          message: "Token expired. Please login again"
+       }); 
     }
   
     //Other error handling conditions, like typeorm error instance etc

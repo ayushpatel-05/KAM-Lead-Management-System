@@ -22,6 +22,7 @@ const isAuthenticatedUser = asyncErrorHandler(async (req: ExtendedRequest, res: 
         return next(new AccessDeniedError("Invalid User"))
     }
     req.user = user;
+    // debugger;
     next();
 });
 

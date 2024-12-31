@@ -23,11 +23,6 @@ export class UserRepository {
   }
 
   async save(user: User): Promise<User> {
-    // try {
       return AppDataSource.getRepository(User).save(user); 
-    // }
-    // catch(error) {
-    //   console.log("Error: ", error);
-    // }
   }
 }
