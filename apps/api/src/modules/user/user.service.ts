@@ -1,9 +1,11 @@
 import { UserRepository } from "./user.repository";
 import bcrypt from "bcrypt";
-import { Login, BackendRegister } from "@repo/schemas";
+import { LoginPayload, BackendRegisterPayload, UserSchema } from "@repo/schemas";
 import { Response } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "@repo/db";
+import { User } from "@repo/schemas";
+import { User as UserDB } from "@repo/db";
+import { AccessDeniedError, BadRequestError } from "../../utils/api-errors";
 
 export class AuthService {
   private userRepository: UserRepository;
@@ -12,18 +14,18 @@ export class AuthService {
     this.userRepository = new UserRepository();
   }
 
-  async login(data: Login) {
+  async login(data: LoginPayload) {
     const { email, password } = data;
     // Check if the user exists
-    const user = await this.userRepository.findByEmail(email);
+    const user = await this.userRepository.findByEmailLogin(email);
     if (!user) {
-      throw new Error("Invalid email or password");
+      throw new AccessDeniedError("Invalid email or password");
     }
 
     // Validate password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Error("Invalid email or password");
+      throw new AccessDeniedError("Invalid email or password");
     }
 
     // // Generate JWT token
@@ -34,18 +36,17 @@ export class AuthService {
     return { user };
   }
 
-  async register(data: BackendRegister) {
+  async register(data: BackendRegisterPayload) {
     const { email, password, firstName, lastName, phone } = data;
 
     // Check if user already exists
-    const existingUser = await this.userRepository.findByEmail(email);
+    const existingUser = await this.userRepository.findByEmailLogin(email);//TODO: Change it
     if (existingUser) {
-      throw new Error("Email already exists");
+      throw new BadRequestError("Email already exists");
     }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10); // Adjust salt rounds as needed
-    debugger;
     // Create new user
     const newUser = await this.userRepository.create({
       email,
@@ -57,13 +58,13 @@ export class AuthService {
 
     // Save the user
     await this.userRepository.save(newUser);
-
+    const sanatizedUser = UserSchema.parse(newUser);
     // // Generate JWT token
     // const token = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.JWT_SECRET!, {
     //   expiresIn: "1h",
     // });
 
-    return { user: newUser };
+    return { user: sanatizedUser };
   }
 
   async setTokenCookie(res: Response, user: User) {
@@ -73,10 +74,15 @@ export class AuthService {
     });
 
     //Change the cookie setting for production
-    res.cookie('jwt', token, { 
+    res.cookie('token', token, { 
       httpOnly: false, 
       // secure: process.env.NODE_ENV === 'production', 
       sameSite: 'lax' 
     });
+  }
+
+  async getUser(user: UserDB) {
+    const sanatizedUser = UserSchema.parse(user);
+    return sanatizedUser;
   }
 }

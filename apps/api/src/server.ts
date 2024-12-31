@@ -2,6 +2,7 @@ import { json, urlencoded } from "body-parser";
 import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import cookieParser from 'cookie-parser';
 
 export const createServer = (): Express => {
   const app = express();
@@ -10,6 +11,7 @@ export const createServer = (): Express => {
     .use(morgan("dev"))
     .use(urlencoded({ extended: true }))
     .use(json())
+    .use(cookieParser())
     .use(cors({
       origin: true,
       // origin: 'http://localhost:5173', // Allow requests from this origin
