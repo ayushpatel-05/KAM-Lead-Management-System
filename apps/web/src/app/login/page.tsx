@@ -6,6 +6,8 @@ import { PiSignInFill } from "react-icons/pi";
 import { AppDispatch } from '../../redux/configureStore';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/modules/auth/authAPI';
+import { useRouter } from "next/navigation";
+
 
 const { useBreakpoint } = Grid;
 const { Text, Title, Link } = Typography;
@@ -13,7 +15,8 @@ const { Text, Title, Link } = Typography;
 // type Props = {}
 
 const Login = () => {
-
+  
+  const router = useRouter();
     const screens = useBreakpoint();
     const dispatch = useDispatch<AppDispatch>();
     const [loading, setLoading] = useState(false);
@@ -25,6 +28,7 @@ const Login = () => {
         const resultAction = await dispatch(login(values)).unwrap();
         message.success(`Welcome, ${resultAction.data.user.firstName}!`);
         // Redirect to dashboard or another page
+        router.push("/");
       } catch (error) {
         console.log(error);
         message.error("Login failed. Please check your credentials.");

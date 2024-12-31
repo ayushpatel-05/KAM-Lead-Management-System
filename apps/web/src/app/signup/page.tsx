@@ -1,8 +1,15 @@
 "use client"
-import React from 'react'
-import { Button, Form, Grid, Input, Select, Typography } from "antd";
+import React, { useState } from 'react'
+import { Button, Form, Grid, Input, message, Select, Typography } from "antd";
 import { LockOutlined, MailOutlined, PhoneOutlined, UserOutlined  } from "@ant-design/icons";
 import { CgProfile } from "react-icons/cg";
+import { AppDispatch } from '../../redux/configureStore';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/modules/auth/authAPI';
+import { RegisterPayload } from '@repo/schemas';
+import { useRouter } from "next/navigation";
+
+
 
 const { useBreakpoint } = Grid;
 const { Text, Title, Link } = Typography;
@@ -10,12 +17,26 @@ const { Text, Title, Link } = Typography;
 // type Props = {}
 
 const Signup = () => {
-
+  
+  const router = useRouter();
     const screens = useBreakpoint();
+    const dispatch = useDispatch<AppDispatch>();
+    const [loading, setLoading] = useState(false);
 
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
+    const onFinish = async (values: RegisterPayload) => {
+      console.log("Received values of form: ", values);
+      setLoading(true);
+      try {
+        const resultAction = await dispatch(register(values)).unwrap();
+        message.success(`Account created successfully! Welcome, ${resultAction.data.user.firstName}!`);
+        // Redirect to dashboard
+        router.push("/login");
+      } catch (error) {
+        message.error("Signup failed. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
     return (
         <section className={`flex items-center justify-center ${screens.sm ? "min-h-screen" : "auto"} bg-gray-100 py-12 md:py-24`}>
         <div className="w-[380px] mx-auto px-6 py-12 bg-white shadow-lg rounded-lg">
