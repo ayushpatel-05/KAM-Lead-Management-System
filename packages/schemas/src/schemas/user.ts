@@ -70,6 +70,13 @@ export const registerResponseSchema = z.object({
 });
 
 
+/**
+ * Pagination Query Schema
+ */
+export const paginationQuerySchema = z.object({
+  page: z.number().min(1).optional(), 
+  size: z.number().min(1).optional(), 
+});
 
 /**
  * Types for inferred schema outputs
