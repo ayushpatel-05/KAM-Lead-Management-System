@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('addresses')
 export class Address {
@@ -20,9 +20,12 @@ export class Address {
   @Column({ type: 'varchar', length: 20, nullable: true })
   zipCode!: string | null;
 
-  @CreateDateColumn()
+  @CreateDateColumn({select: false})
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({select: false})
   updatedAt!: Date;
+
+  @DeleteDateColumn({select: false})
+  deletedDate!: Date;
 }
