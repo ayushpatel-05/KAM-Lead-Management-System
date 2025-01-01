@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 import { Lead } from './Lead';
 import { Interaction } from './Interaction';
+import { CallSchedule } from './CallSchedule';
 
 @Entity('contacts')
 export class Contact {
@@ -23,21 +24,24 @@ export class Contact {
   @Column({ type: 'text', nullable: true })
   notes!: string | null;
   
+  @Column({ type: 'varchar', length: 50, nullable: false })
+  timezone!: string | null;
+
   @ManyToOne(() => Lead, (lead) => lead.contacts, { nullable: true, onDelete: 'CASCADE' }) 
   lead!: Lead;
 
   @OneToMany(() => Interaction, (interaction) => interaction.contact)
   interactions!: Interaction[];
 
-//   @ManyToOne(() => Restaurant, (restaurant) => restaurant.contacts, { nullable: true }) 
-//   restaurant_id!: Restaurant;
+  @OneToMany(() => CallSchedule, (callSchedule) => callSchedule.contact)
+  callSchedules!: CallSchedule[];
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({select: false})
   deletedDate!: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({select: false})
   updatedAt!: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({select: false})
   created_at!: Date;
 }
