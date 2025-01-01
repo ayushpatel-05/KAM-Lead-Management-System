@@ -69,22 +69,6 @@ export class RestaurantController {
     }
   }
 
-//   async updateRestaurant(req: ExtendedRequest, res: Response, next: NextFunction) {
-//     try {
-//     }
-//     catch(error: any) {
-//       next(error);
-//     }
-//   }
-
-//   async deleteRestaurant(req: ExtendedRequest, res: Response, next: NextFunction) {
-//     try {
-//     }
-//     catch(error: any) {
-//       next(error);
-//     }
-//   }
-
 async updateRestaurant(req: ExtendedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;

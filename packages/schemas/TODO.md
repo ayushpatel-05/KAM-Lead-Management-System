@@ -1,0 +1,1 @@
+- Remove repeaded schema structure in some files
