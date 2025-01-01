@@ -6,7 +6,7 @@ import { CallSchedule } from './CallSchedule';
 @Entity('contacts')
 export class Contact {
   @PrimaryGeneratedColumn("uuid")
-  contact_id!: number;
+  id!: string;
   
   @Column({ type: 'varchar', length: 255, nullable: false })
   name!: string;

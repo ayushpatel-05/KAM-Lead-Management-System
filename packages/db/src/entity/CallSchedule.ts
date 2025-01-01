@@ -36,7 +36,7 @@ enum CallIntent {
   OTHER = 'other', // Any other purpose not covered by above
 }
 
-@Entity()
+@Entity("call_schedules")
 export class CallSchedule {
   @PrimaryGeneratedColumn()
   id!: number;

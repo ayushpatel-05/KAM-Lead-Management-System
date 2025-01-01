@@ -5,7 +5,7 @@ import { Contact } from './Contact';
 import { Interaction } from './Interaction';
 import { CallSchedule } from './CallSchedule';
 
-@Entity()
+@Entity("leads")
 export class Lead {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -48,6 +48,7 @@ export class Lead {
   @ManyToOne(() => Restaurant, (restaurant) => restaurant.leads, { nullable: true, onDelete: 'CASCADE' }) // Assuming Restaurant has a one-to-many relationship with Lead
   restaurant!: Restaurant;
   
+  //TODO: Remove the cascase when contacts are tied to restaurant instead of lead
   @OneToMany(() => Contact, (contact) => contact.lead, {cascade: ["insert", "update", "remove", "soft-remove", "recover"]})
   contacts!: Contact[];
   
