@@ -4,6 +4,7 @@ import { AppDataSource, ensureDatabaseExists } from "@repo/db";
 import { DataSource } from "typeorm";
 import UserRouter from "./modules/user/user.route";
 import RestaurantRouter from "./modules/restaurant/restaurant.route";
+import LeadRouter from "./modules/lead/lead.route";
 import 'dotenv/config';
 import errorHandler from "./middleware/errorHandler";
 
@@ -18,6 +19,7 @@ ensureDatabaseExists().then(() => {
 
 server.use(UserRouter);
 server.use(RestaurantRouter);
+server.use(LeadRouter);
 
 server.use(errorHandler);
 
