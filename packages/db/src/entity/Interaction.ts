@@ -5,12 +5,14 @@ import {
   CreateDateColumn, 
   ManyToOne, 
   UpdateDateColumn, 
-  DeleteDateColumn 
+  DeleteDateColumn, 
+  OneToOne
 } from 'typeorm';
 import { Lead } from './Lead'; 
 import { User } from './User'; 
-import { Restaurant } from './Restaurant';
 import { Contact } from './Contact';
+import { Order } from './Order';
+import { InteractionType, InteractionSubType, InteractionMethod, Outcome } from '@repo/schemas';
 
 @Entity('interactions')
 export class Interaction {
@@ -19,34 +21,35 @@ export class Interaction {
 
   @Column({ 
     type: 'enum', 
-    enum: ['call', 'order'], 
+    enum: InteractionType, 
     nullable: false 
   })
-  interactionType!: 'call' | 'order';
+  interactionType!: InteractionType;
 
   // Subtype for better categorization
   @Column({ 
     type: 'enum', 
-    enum: ['initial', 'follow-up', 'feedback', 'new order', 'repeat order'], 
+    enum: InteractionSubType, 
     nullable: true 
   })
-  interactionSubtype!: 'initial' | 'follow-up' | 'feedback' | 'new order' | 'repeat order';
+  interactionSubtype!: InteractionSubType;
 
   // Interaction method
   @Column({ 
     type: 'enum', 
-    enum: ['phone', 'email', 'chat', 'in-person'], 
+    enum: InteractionMethod, 
     nullable: false 
   })
-  interactionMethod!: 'phone' | 'email' | 'chat' | 'in-person';
+  interactionMethod!: InteractionMethod;
 
   // Specific data for calls (e.g., duration in seconds)
   @Column({ type: 'int', nullable: true })
   callDuration!: number | null;
 
-  // Specific data for orders (e.g., total amount)
-  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
-  orderAmount!: number | null;
+  // // Specific data for orders (e.g., total amount)
+  // //TODO: Make it a seperate entity
+  // @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  // orderAmount!: number | null;
 
   // Generic details field for any additional notes
   @Column({ type: 'text', nullable: true })
@@ -55,7 +58,11 @@ export class Interaction {
   @Column({ type: 'timestamp', nullable: false })
   interactionDate!: Date;
 
+  @OneToOne(() => Order, (order) => order.interaction)
+  order!: Order;
+
   // User who made the interaction, it might be possible that the user is different from kam for a perticular interaction
+  //TODO: Change the name of this to createdBy
   @ManyToOne(() => User, { nullable: false, onDelete: 'SET NULL' })
   user!: User;
 
@@ -70,18 +77,18 @@ export class Interaction {
   // Interaction outcome (e.g., positive, neutral, negative)
   @Column({ 
     type: 'enum', 
-    enum: ['positive', 'neutral', 'negative'], 
+    enum: Outcome, 
     default: 'neutral',
     nullable: false 
   })
-  outcome!: 'positive' | 'neutral' | 'negative';
+  outcome!: Outcome;
 
-  @CreateDateColumn()
+  @CreateDateColumn({select: false})
   created_at!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({select: false})
   updatedAt!: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({select: false})
   deletedDate!: Date;
 }

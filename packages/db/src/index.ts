@@ -5,5 +5,6 @@ export { CallSchedule } from "./entity/CallSchedule";
 export { Contact } from "./entity/Contact";
 export { Interaction } from "./entity/Interaction";
 export { Lead } from "./entity/Lead";
+export { Order } from "./entity/Order";
 export { Restaurant } from "./entity/Restaurant";
 export { User } from "./entity/User";

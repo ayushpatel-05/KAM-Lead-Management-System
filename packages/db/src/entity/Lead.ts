@@ -4,6 +4,7 @@ import { Restaurant } from './Restaurant'; // Assuming Restaurant entity is defi
 import { Contact } from './Contact';
 import { Interaction } from './Interaction';
 import { CallSchedule } from './CallSchedule';
+import { Order } from './Order';
 
 @Entity("leads")
 export class Lead {
@@ -58,4 +59,6 @@ export class Lead {
   @OneToMany(() => Interaction, (interaction) => interaction.lead, {nullable: false, cascade: ["insert", "update", "remove", "soft-remove", "recover"]})
   interactions!: Interaction[];
 
+  @OneToMany(() => Order, (order) => order.lead)
+  orders!: Order[];
 }
