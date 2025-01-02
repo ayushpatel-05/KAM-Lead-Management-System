@@ -23,7 +23,10 @@ const ContactSchema = z.object({
 export const CallScheduleFilterSchema = z.object({
   id: z.string().uuid().optional(),
   type: z.nativeEnum(CallScheduleType).optional(),
-  datetime: z.date().optional(),
+  datetime: z.preprocess((arg) => {
+    // Transform string to Date object if it's a valid ISO string
+    return typeof arg === "string" ? new Date(arg) : arg;
+  }, z.date()).optional(),
   status: z.nativeEnum(CallScheduleStatus).optional(),
   intent: z.nativeEnum(CallIntent).optional(),
   notes: z.string().optional(),
@@ -54,7 +57,10 @@ export const CreateCallScheduleSchema = z.object({
 
 export const UpdateCallScheduleSchema = z.object({
     type: z.nativeEnum(CallScheduleType).default(CallScheduleType.FIXED).optional(), 
-    datetime: z.date().optional(),
+    datetime: z.preprocess((arg) => {
+      // Transform string to Date object if it's a valid ISO string
+      return typeof arg === "string" ? new Date(arg) : arg;
+    }, z.date()).optional(),
     status: z.nativeEnum(CallScheduleStatus).default(CallScheduleStatus.SCHEDULED).optional(),
     intent: z.nativeEnum(CallIntent).optional(),
     notes: z.string().optional(),
