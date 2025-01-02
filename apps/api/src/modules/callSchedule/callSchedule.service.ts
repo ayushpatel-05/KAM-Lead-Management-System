@@ -40,7 +40,7 @@ export class CallScheduleService {
    /**
    * Update a call schedule entity.
    * @param id - The call schedule ID to update.
-   * @param restaurantData - Partial data for the call schedule.
+   * @param callScheduleData - Partial data for the call schedule.
    * @returns The updated call schedule entity.
    */
    async updateCallSchedule(id: string, callScheduleData: Partial<CallSchedule>): Promise<CallSchedule> {

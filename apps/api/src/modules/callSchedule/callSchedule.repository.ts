@@ -1,5 +1,5 @@
 import { AppDataSource, Contact } from "@repo/db";
-import { Repository, Like } from "typeorm";
+import { Repository } from "typeorm";
 import { CallSchedule, Lead } from "@repo/db";
 import { GetAllCallSchedulePayload } from "@repo/schemas";
 
@@ -12,7 +12,7 @@ export class CallScheduleRepository {
 
   /**
    * Find a call schedule by its unique ID
-   * @param id - The UUID of the restaurant.
+   * @param id - The UUID of the call schedule.
    * @returns The call schedule entity or null if not found.
    */
   async findById(id: string): Promise<CallSchedule | null> {
@@ -22,7 +22,7 @@ export class CallScheduleRepository {
         relations: ["lead", "contact"],
       });
     } catch (error) {
-      console.error("Error finding restaurant by ID:", error);
+      console.error("Error finding call schedule by ID:", error);
       throw error; // Re-throw to allow higher-level handling
     }
   }
