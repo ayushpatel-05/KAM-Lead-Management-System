@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AuthService } from "./user.service";
 import { loginSchema, backendRegisterSchema, User, UserSchema } from "@repo/schemas";
-import { ExtendedRequest } from "../../middleware/authMiddleware";
-
+import { ExtendedRequest } from "../../types/ExtendedRequest";
 export class AuthController {
   private authService: AuthService;
 

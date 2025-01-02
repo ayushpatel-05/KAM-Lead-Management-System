@@ -4,7 +4,7 @@ import { Restaurant } from "@repo/db";
 import { Address } from "@repo/db";
 import { User } from "@repo/db";
 import { Lead } from "@repo/db";
-import { RestaurantFilter } from "./restaurant";
+import { RestaurantFilter } from "@repo/schemas";
 import { NotFoundError } from "../../utils/api-errors";
 
 export class RestaurantRepository {
