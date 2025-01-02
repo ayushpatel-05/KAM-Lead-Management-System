@@ -32,7 +32,7 @@ export class ContactService {
     // newContact.lead = lead; // Link the contact to the lead
 
     const newContact = await this.contactRepository.create(contactData);
-
+    newContact.lead = lead;
     // Save the new contact to the database
     return await this.contactRepository.save(newContact);
   }
