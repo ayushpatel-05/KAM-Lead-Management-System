@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@repo/schemas": "*",
     "dotenv": "^16.4.7",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
