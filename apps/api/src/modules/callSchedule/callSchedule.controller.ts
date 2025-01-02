@@ -62,7 +62,7 @@ export class CallScheduleController {
 
       res.status(200).json({message: "Call Schedule updated", data: this.callScheduleService.sanitizeCallSchedule(updatedCallSchedule)});
     } catch (error: any) {
-      console.error('Error in updateRestaurant:', error);
+      console.error('Error in updating call schedule:', error);
       next(error);
     }
   }
@@ -74,7 +74,7 @@ export class CallScheduleController {
 
       res.status(204).send();
     } catch (error: any) {
-      console.error('Error in deleteRestaurant:', error);
+      console.error('Error in delete call schedule:', error);
       next(error);
     }
   }
