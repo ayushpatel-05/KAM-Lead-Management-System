@@ -1,6 +1,8 @@
 # Changes
 ## Common
 - Seperate the validation parsing logic
+- Reverify and clean the schemas for each route's request body, query, params and reponse
+- Multiple layers of function each checking weather the authenticated user owns the resource and the permission to perform the operation or not
 ## Module: Restaurant
 - Get all the leads based on restaurant
 - ## Module: Lead

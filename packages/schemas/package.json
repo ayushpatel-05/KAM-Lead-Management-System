@@ -1,5 +1,6 @@
 {
     "name": "@repo/schemas",
+    "description": "Schemas and types commonly required accross the monorepo",
     "version": "1.0.0",
     "private": true,
     "license": "MIT",

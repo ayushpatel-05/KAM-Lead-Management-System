@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { RestaurantService } from "./restaurant.service";
-import { ExtendedRequest } from "../../middleware/authMiddleware";
+import { ExtendedRequest } from "../../types/ExtendedRequest";
 import { AccessDeniedError } from "../../utils/api-errors";
 import { paginationQuerySchema, RestaurantResponseSchema, RestaurantSchema, UpdateRestaurantSchema } from "@repo/schemas";
 

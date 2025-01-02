@@ -3,11 +3,9 @@ import { AccessDeniedError } from "../utils/api-errors";
 import { asyncErrorHandler } from "./asyncErrorHandler";
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { ExtendedRequest } from "../types/ExtendedRequest";
 // import { loginSchema } from "@repo/schemas"
 
-export interface ExtendedRequest extends Request {
-    user?: User; // Optional user property
-  }
 
 const isAuthenticatedUser = asyncErrorHandler(async (req: ExtendedRequest, res: Response, next: NextFunction) => {
     const { token } = req.cookies;

@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import { LeadService } from "./lead.service";
-import { ExtendedRequest } from "../../middleware/authMiddleware";
+import { ExtendedRequest } from "../../types/ExtendedRequest";
 import { NotFoundError } from "../../utils/api-errors";
 import { CreateContactSchema, CreateLeadSchema, LeadIdSchema, ReassignManagerSchema, UpdateLeadSchema, UpdateLeadStatusSchema } from "@repo/schemas";
 import { ContactService } from "../contact/contact.service";

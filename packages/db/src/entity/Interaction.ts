@@ -15,7 +15,7 @@ import { Contact } from './Contact';
 @Entity('interactions')
 export class Interaction {
   @PrimaryGeneratedColumn("uuid")
-  id!: number;
+  id!: string;
 
   @Column({ 
     type: 'enum', 
